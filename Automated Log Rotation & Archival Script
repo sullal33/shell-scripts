@@ -1,0 +1,16 @@
+# Automated Log Rotation & Archival Script
+
+Problem Solved: Prevents servers from running out of disk space due to growing log files.
+
+#!/bin/bash
+log_dir="/var/log/myapp"
+archive_dir="/var/log/myapp/archive"
+
+mkdir -p $archive_dir
+find $log_dir -type f -name "*.log" -mtime +7 -exec gzip {} \; -exec mv {}.gz $archive_dir \;
+
+# Optionally delete logs older than 30 days
+find $archive_dir -type f -mtime +30 -delete
+
+
+Real-World Impact: Prevented outages caused by full disk usage, especially in legacy systems not using log rotation utilities.
