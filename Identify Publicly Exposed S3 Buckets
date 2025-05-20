@@ -1,0 +1,15 @@
+Identify Publicly Exposed S3 Buckets
+Problem Solved: Security risk mitigation — quickly identify and alert on misconfigured public S3 buckets.
+
+#!/bin/bash
+buckets=$(aws s3api list-buckets --query 'Buckets[*].Name' --output text)
+
+for bucket in $buckets; do
+    acl=$(aws s3api get-bucket-acl --bucket "$bucket")
+    if echo "$acl" | grep -q "AllUsers"; then
+        echo "WARNING: Bucket $bucket is publicly accessible!"
+    fi
+done
+
+
+Real-World Impact: Proactively found and fixed security vulnerabilities in customer data storag
