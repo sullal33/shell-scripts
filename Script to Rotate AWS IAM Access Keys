@@ -1,0 +1,13 @@
+Script to Rotate AWS IAM Access Keys
+Problem Solved: Enforces security best practices for IAM users.
+
+#!/bin/bash
+username=$1
+new_key=$(aws iam create-access-key --user-name $username)
+old_key=$(aws iam list-access-keys --user-name $username --query 'AccessKeyMetadata[0].AccessKeyId' --output text)
+
+echo "New Key Created. Deactivating old key: $old_key"
+aws iam update-access-key --user-name $username --access-key-id $old_key --status Inactive
+
+
+Real-World Impact: Helped rotate keys in compliance audits or routine security policies.
