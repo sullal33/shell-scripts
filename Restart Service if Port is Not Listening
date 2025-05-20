@@ -1,0 +1,15 @@
+6. Restart Service if Port is Not Listening
+Problem Solved: Ensures high availability of critical services.
+
+
+#!/bin/bash
+PORT=8080
+SERVICE=myapp
+
+if ! nc -z localhost $PORT; then
+    echo "Port $PORT not listening. Restarting $SERVICE"
+    systemctl restart $SERVICE
+fi
+
+
+Real-World Impact: Prevented downtime for customer-facing services by auto-restarting.
