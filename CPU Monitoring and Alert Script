@@ -1,0 +1,12 @@
+CPU Monitoring and Alert Script
+Problem Solved: Alerts if CPU usage crosses threshold.
+
+#!/bin/bash
+cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+threshold=80.0
+
+if (( $(echo "$cpu_usage > $threshold" | bc -l) )); then
+  echo "High CPU Usage: $cpu_usage%" | mail -s "Alert: CPU Usage High" admin@example.com
+fi
+
+Real-World Impact: Prevented performance degradation on busy application servers.
