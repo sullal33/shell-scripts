@@ -1,0 +1,9 @@
+Sync GitHub Repo to S3 (CI/CD Alternative)
+Problem Solved: Fast frontend deployments without a full pipeline.
+
+#!/bin/bash
+# Run this after cloning or pulling latest repo
+aws s3 sync ./frontend s3://my-bucket-name --delete
+
+
+Real-World Impact: Reduced dependency on Jenkins or CodePipeline for basic frontend apps.
