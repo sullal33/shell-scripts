@@ -11,4 +11,7 @@ done
 
 
 Real-World Impact: Saved gigabytes of storage across Kubernetes worker nodes or dev environments.
+This is applicable for self managed k8s cluster, where we have access to node. 
+Images are downloaded to node, hence can be accessed and deleted
 
+In case of managed k8s like EKS< image deletion happens by Garbage Collection and managed by aws itself.
