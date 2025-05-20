@@ -1,0 +1,12 @@
+Database Backup and Upload to S3
+Problem Solved: Automated and scheduled DB backups with cloud storage.
+
+#!/bin/bash
+timestamp=$(date +"%Y%m%d%H%M")
+backup_file="/tmp/db-backup-$timestamp.sql"
+
+pg_dump -U myuser mydb > $backup_file
+aws s3 cp $backup_file s3://my-bucket/db-backups/
+rm $backup_file
+
+Real-World Impact: Ensured daily backups without manual intervention; easy disaster recovery.
