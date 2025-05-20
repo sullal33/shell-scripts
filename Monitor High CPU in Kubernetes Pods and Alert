@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Requires: metrics-server to be running in the cluster
+
+NAMESPACE=default
+CPU_THRESHOLD=80  # In percentage
+
+# Fetch CPU usage
+echo "Checking CPU usage for pods in namespace: $NAMESPACE"
+
+kubectl top pod -n $NAMESPACE | tail -n +2 | while read pod cpu mem; do
+  cpu_value=$(echo $cpu | sed 's/m//')  # Remove the 'm' from the millicores value
+  cpu_percent=$((cpu_value / 10))
+
+  if [ "$cpu_percent" -gt "$CPU_THRESHOLD" ]; then
+    echo "ALERT: Pod $pod is using high CPU: ${cpu_percent}%"
+    # You could integrate this with Slack, email, etc.
+  fi
+done
+
+Alerts if any pod exceeds a CPU usage threshold — useful for debugging performance issues.
