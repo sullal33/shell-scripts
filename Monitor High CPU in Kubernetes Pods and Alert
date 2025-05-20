@@ -19,3 +19,22 @@ kubectl top pod -n $NAMESPACE | tail -n +2 | while read pod cpu mem; do
 done
 
 Alerts if any pod exceeds a CPU usage threshold — useful for debugging performance issues.
+
+Simplified:
+
+#!/bin/bash
+
+# Threshold for CPU usage (%)
+THRESHOLD=80
+
+# Get all pods and their CPU usage
+pods=$(kubectl top pod --no-headers)
+
+# Loop through each pod and check CPU usage
+while read -r pod cpu mem; do
+  cpu_val=${cpu::-1}  # Remove "m" at the end (millicores)
+  if [ "$cpu_val" -gt "$THRESHOLD" ]; then
+    echo "ALERT: Pod $pod is using high CPU: $cpu"
+  fi
+done <<< "$pods"
+
