@@ -1,0 +1,14 @@
+Bulk Docker Image Cleanup on All Hosts
+Problem Solved: Reclaims disk space across multiple servers where old Docker images pile up.
+
+#!/bin/bash
+hosts=("host1" "host2" "host3")
+
+for host in "${hosts[@]}"; do
+    echo "Cleaning Docker images on $host..."
+    ssh $host "docker image prune -af"
+done
+
+
+Real-World Impact: Saved gigabytes of storage across Kubernetes worker nodes or dev environments.
+
